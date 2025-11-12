@@ -131,10 +131,13 @@ namespace rl_tools::nn_models::mlp {
 
     template<typename SPEC>
     struct NeuralNetworkBackward: public NeuralNetworkForward<SPEC>{
+        using PARENT = NeuralNetworkForward<SPEC>;
 //        static constexpr typename SPEC::TI BATCH_SIZE = SPEC::BATCH_SIZE;
     };
     template<typename SPEC>
-    struct NeuralNetworkGradient: public NeuralNetworkBackward<SPEC>{};
+    struct NeuralNetworkGradient: public NeuralNetworkBackward<SPEC>{
+        using PARENT = NeuralNetworkBackward<SPEC>;
+    };
 
     template<typename CONFIG, typename CAPABILITY, typename INPUT_SHAPE>
     using NeuralNetwork =

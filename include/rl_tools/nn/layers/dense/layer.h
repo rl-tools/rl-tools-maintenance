@@ -109,6 +109,8 @@ namespace rl_tools::nn::layers::dense {
     template<typename SPEC>
     struct LayerBackward: public LayerForward<SPEC>{
         // This layer supports backpropagation wrt its input but not its weights (for this it stores the intermediate pre_activations)
+
+        using PARENT = LayerForward<SPEC>;
         using PRE_ACTIVATIONS_CONTAINER_SPEC = matrix::Specification<typename SPEC::T, typename SPEC::TI, SPEC::INTERNAL_BATCH_SIZE, SPEC::OUTPUT_DIM, SPEC::DYNAMIC_ALLOCATION>;
         using PRE_ACTIVATIONS_CONTAINER_TYPE = Matrix<PRE_ACTIVATIONS_CONTAINER_SPEC>;
         PRE_ACTIVATIONS_CONTAINER_TYPE pre_activations;
@@ -116,6 +118,8 @@ namespace rl_tools::nn::layers::dense {
     template<typename SPEC>
     struct LayerGradient: public LayerBackward<SPEC>{
         // This layer supports backpropagation wrt its input but including its weights (for this it stores the intermediate outputs in addition to the pre_activations because they determine the gradient wrt the weights of the following layer)
+
+        using PARENT = LayerBackward<SPEC>;
         using OUTPUT_CONTAINER_SPEC = matrix::Specification<typename SPEC::T, typename SPEC::TI, SPEC::INTERNAL_BATCH_SIZE, SPEC::OUTPUT_DIM, SPEC::DYNAMIC_ALLOCATION>;
         using OUTPUT_CONTAINER_TYPE = Matrix<OUTPUT_CONTAINER_SPEC>;
         OUTPUT_CONTAINER_TYPE output;
